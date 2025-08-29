@@ -9,4 +9,14 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('health')
+  getHealth(): object {
+    return {
+      status: 'OK',
+      message: 'Server is running',
+      timestamp: new Date().toISOString(),
+      database: 'MongoDB connected via Mongoose'
+    };
+  }
 }
