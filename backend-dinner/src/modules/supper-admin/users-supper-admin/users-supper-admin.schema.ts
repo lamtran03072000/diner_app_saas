@@ -1,6 +1,7 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { auditFieldsPlugin } from '../../../common/plugins/audit-fields.plugin';
+import { SupperAdminRole } from 'src/common/enums/supper-admin-role.enum';
 
 export type UsersSupperAdminDocument = HydratedDocument<UsersSupperAdmin>;
 
@@ -13,7 +14,7 @@ export class UsersSupperAdmin {
   password: string;
 
   @Prop({ required: true })
-  role: string;
+  role: SupperAdminRole;
 }
 
 export const UsersSupperAdminSchema = SchemaFactory.createForClass(UsersSupperAdmin);
