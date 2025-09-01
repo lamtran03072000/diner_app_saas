@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { AuditTrailInterceptor } from './common/interceptors/audit-trail.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,6 +12,7 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
   }));
+  app.useGlobalInterceptors(new AuditTrailInterceptor());
   
   await app.listen(process.env.PORT ?? 3030);
 }
