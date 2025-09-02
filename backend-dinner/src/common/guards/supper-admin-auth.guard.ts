@@ -1,4 +1,10 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { JwtService } from '../../shared/jwt/jwt.service';
 
 @Injectable()
@@ -15,8 +21,7 @@ export class SupperAdminAuthGuard implements CanActivate {
       throw new ForbiddenException('Invalid scope');
     }
     req.user = { sub: payload.sub, role: payload.role };
+
     return true;
   }
 }
-
-

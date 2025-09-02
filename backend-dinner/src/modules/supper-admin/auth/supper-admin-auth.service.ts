@@ -13,20 +13,24 @@ export class SupperAdminAuthService {
   ) {}
 
   async login(email: string, password: string) {
-    const user = await this.usersService.findByEmail(email);
-    if (!user) throw new UnauthorizedException('Invalid credentials');
-    const ok = await this.hashing.compare(password, user.password);
-    if (!ok) throw new UnauthorizedException('Invalid credentials');
-    const accessToken = this.jwt.signToken({
-      sub: user._id.toString(),
-      role: user.role as SupperAdminRole,
-      scope: 'SUPPER_ADMIN',
-    });
-    return {
-      accessToken,
-      user: { id: user._id.toString(), email: user.email, role: user.role },
-    };
+    try {
+      const user = await this.usersService.findByEmail(email);
+      if (!user) throw new UnauthorizedException('Invalid credentials');
+      const ok = await this.hashing.compare(password, user.password);
+      if (!ok) throw new UnauthorizedException('Invalid credentials');
+      const accessToken = this.jwt.signToken({
+        sub: user._id.toString(),
+        role: user.role as SupperAdminRole,
+        scope: 'SUPPER_ADMIN',
+      });
+      return {
+        accessToken,
+        user: { id: user._id.toString(), email: user.email, role: user.role },
+      };
+    } catch (error) {
+      throw new UnauthorizedException(
+        'Tài khoản hoặc mật khẩu không chính xác',
+      );
+    }
   }
 }
-
-
