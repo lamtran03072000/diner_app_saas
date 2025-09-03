@@ -9,6 +9,11 @@ import {
 } from './dto';
 import { PaginationDto } from '../../../common/dto/pagination.dto';
 
+interface UserPayload {
+  sub: string;
+  role: string;
+}
+
 @Injectable()
 export class OrganizationsService {
   constructor(
@@ -18,12 +23,18 @@ export class OrganizationsService {
 
   async create(
     createOrganizationDto: CreateOrganizationDto,
-    userId?: string,
+    user?: UserPayload,
   ): Promise<OrganizationResponseDto> {
+    console.log('user', user);
+    console.log('createOrganizationDto', createOrganizationDto);
+
+    // Extract user ID from the user parameter
+    const actualUserId = user?.sub;
+
     const organization = new this.orgModel({
       ...createOrganizationDto,
-      createdBy: userId,
-      updatedBy: userId,
+      createdBy: actualUserId,
+      updatedBy: actualUserId,
     });
 
     const savedOrganization = await organization.save();

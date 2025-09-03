@@ -20,6 +20,11 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { PaginationDto } from '../../../common/dto/pagination.dto';
 
+interface UserPayload {
+  sub: string;
+  role: string;
+}
+
 @Controller('supper-admin/organizations')
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
@@ -29,9 +34,9 @@ export class OrganizationsController {
   @Roles('manager')
   async create(
     @Body() createOrganizationDto: CreateOrganizationDto,
-    @CurrentUser() userId?: string,
+    @CurrentUser() user: UserPayload,
   ): Promise<OrganizationResponseDto> {
-    return this.organizationsService.create(createOrganizationDto, userId);
+    return this.organizationsService.create(createOrganizationDto, user);
   }
 
   @Get()

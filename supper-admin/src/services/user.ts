@@ -1,7 +1,6 @@
 import type { UserInfoResponse } from "../types/auth";
 import { BaseAPIService } from "./index";
 import { PATH_API } from "../constants/pathApi";
-import { accessTokenCookie } from "../../util/cookie";
 
 class UserService extends BaseAPIService {
   constructor() {

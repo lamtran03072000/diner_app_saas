@@ -6,10 +6,8 @@ import UserService from "../../services/user";
 import { SupperAdminRole } from "../../constants/auth";
 import { NavLink, useLocation } from "react-router-dom";
 import { PATH } from "../../routers";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsLogin } from "../../store/auth/authSlice";
+import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
-import { accessTokenCookie } from "../../../util/cookie";
 
 type MenuItem = {
   key: string;
